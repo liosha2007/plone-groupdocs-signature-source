@@ -31,9 +31,9 @@ class IGDSignaturePortlet(IPortletDataProvider):
         description=_(u"Title of the GroupDocs Signature portlet"),
         required=True)
 
-    fileid = schema.TextLine(
-        title=_(u"File ID"),
-        description=_(u"GUID of the shared file from GroupDocs account"),
+    formid = schema.TextLine(
+        title=_(u"Form ID"),
+        description=_(u"Form ID from GroupDocs account"),
         required=True)
         
     width = schema.TextLine(
@@ -75,17 +75,17 @@ class Assignment(base.Assignment):
     implements(IGDSignaturePortlet)
 
     header = _(u"title_gdsignature_portlet", default=u"GroupDocs Signature portlet")
-    fileid = u""
+    formid = u""
     width = u""
     height = u""
     omit_border = False
     footer = u""
     more_url = ''
 
-    def __init__(self, header=u"", fileid=u"", width=u"", height=u"", omit_border=False, footer=u"",
+    def __init__(self, header=u"", formid=u"", width=u"", height=u"", omit_border=False, footer=u"",
                  more_url=''):
         self.header = header
-        self.fileid = fileid
+        self.formid = formid
         self.width = width
         self.height = height
         self.omit_border = omit_border
@@ -126,7 +126,7 @@ class Renderer(base.Renderer):
     def transformed(self, mt='text/x-html-safe'):
         """Transform imput data to get iframe code for GroupDocs Embedded Signature.
         """
-        frame_source = '<iframe src="https://apps.groupdocs.com/document-signature/Embed/' + self.data.fileid + '?quality=50&use_pdf=False&download=False" frameborder="0" width="' + self.data.width + '" height="' + self.data.height + '"></iframe>'
+        frame_source = '<iframe src="https://apps.groupdocs.com/signature/forms/SignEmbed/' + self.data.formid + '?referer=Plone/1.0" frameborder="0" width="' + self.data.width + '" height="' + self.data.height + '"></iframe>'
 
         if frame_source:
             return frame_source
